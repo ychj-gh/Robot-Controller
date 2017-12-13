@@ -1,0 +1,4 @@
+RC_TOOL(TOOL);
+RC_REF_SYS(1);
+
+HALT;

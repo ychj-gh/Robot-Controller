@@ -1,0 +1,63 @@
+# rsi code example
+
+A = MIN(12, 11, -1, -19, -193.3)
+# PRINT(A)
+# B = MAX(11, 12, 1, 19, 2.3) 
+# PRINT(B)
+
+POSACT(CPX, CPY, CPZ, CPA, CPB, CPC)
+AXISACT(AP1, AP2, AP3, AP4, AP5, AP6)
+
+COMMUNICATION(1)
+
+PRINT(KX)
+PRINT(KY)
+PRINT(KZ)
+PRINT(KA)
+PRINT(KB)
+PRINT(KC)
+PRINT(FR)
+PRINT(STOP)
+
+IF EQ(STOP, 1) THEN
+	STOP(1)
+END_IF
+
+# A = 10.2
+# B = 0.1
+# A = AND(A, B)
+# A = NOT(A)
+
+# A = 1
+# A = PID0(10)
+# PRINT(A)
+# PRINT(B)
+# PRINT(C)
+
+# A = -0.7
+# PRINT(A)
+# A = B
+# PRINT(A)
+# B = SUM(6, 8, 5)
+# PRINT(B)
+
+# PRINT(A)
+# IF GT(A, 1) THEN 
+# 	A = 2
+# ELSE IF LT(A, 0.5) THEN
+# 	A = 1
+# ELSE
+# 	A = 3
+# END_IF
+
+# PRINT(A)
+
+# WHILE A DO
+# 	DEC(A)
+# 	PRINT(A)
+# END_WHILE
+
+# A = 5.6
+# LOOP A DO
+#  	PRINT(A)
+# END_LOOP

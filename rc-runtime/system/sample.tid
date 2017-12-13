@@ -1,0 +1,76 @@
+# just for test
+
+# BOOL a;
+# BOOL b = TRUE;
+# BOOL c = FALSE;
+
+# CHAR d = 'a';
+# CHAR e;
+
+
+# JTPOSE POSE1 = 1, 2, 34, 4.5, 23, 4.5;
+
+BOOL ON = TRUE;
+BOOL OFF = FALSE;
+
+# CHAR B012;
+CHAR B001;
+CHAR B002;
+# CHAR B020;
+# CHAR B010;
+# CHAR B210;
+# CHAR B033;
+# CHAR B034
+# CHAR B103;
+# CHAR B349;
+
+P001 = 1, 2, 3, 4, 5, 6;
+P002 = 1.3, 1, 3.45, 5.674, 5.23, 4.56;
+P003 = 1.2, 1.4, 1.5, 1.6, 1.7, 1.8;
+
+INT I001 = 100;
+# INT I020 = 324;
+# INT I038 = 23;
+# INT I024 = 25;
+# INT I103 = 12;
+# INT I013 = 13;
+
+# INT IN10;
+INT OUT10;
+
+REAL R001 ;
+REAL R002 = 10.3;
+REAL R003 = 234.3;
+REAL R004 = 231.67;
+
+# INT e;
+# INT a = ^B101;
+# INT b = ^H-C1;
+# INT c = -1001;
+
+# REAL d = -10.05;
+# REAL f;
+
+
+# STRING stra = "120";
+# STRING strb = "jhakfahalgaghaghajf3";
+STRING S001;
+INT D001;
+# REAL R001;
+
+# TRPOSE POSE = 1.2, 2.3, 4, 5.6, 7, 9;
+BP001 = 1.2, 2.3, 4, 5.6, 7, 9;
+# EX008 = 1.2, 2.3, 4, 5.6, 27, 19;
+
+
+# TOOLDATA T001 = 210.00, 321.05, -150.58, 0, 1.23, 2.25;
+# TOOLDATA T002 = 210.00, 321.05, -150.58, 0, 1.23, 2.25, 1.5, 2, 110.0, 0.035, 0.12, 0, 2;
+
+
+# COORDATA C001, O, POSE, BP001, POSE;
+# COORDATA C002, T, BP001, POSE, POSE;
+# COORDATA T001, O, BP001, BP102, BP003;
+
+
+
+

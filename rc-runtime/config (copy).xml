@@ -1,0 +1,73 @@
+<ROOT>
+    <DECLARE>
+        <VARIABLES>
+             <VAR NAME="A" TYPE="DOUBLE" INIT="1" />
+             <VAR NAME="B" TYPE="DOUBLE" INIT="2" />
+             <VAR NAME="C" TYPE="DOUBLE" INIT="-3.3" />
+
+             <VAR NAME="CPX" TYPE="DOUBLE" INIT="1.0" />
+             <VAR NAME="CPY" TYPE="DOUBLE" INIT="2.0"/>
+             <VAR NAME="CPZ" TYPE="DOUBLE" INIT="100"/>
+             <VAR NAME="CPA" TYPE="DOUBLE" />
+             <VAR NAME="CPB" TYPE="DOUBLE" />
+             <VAR NAME="CPC" TYPE="DOUBLE" />
+
+             <VAR NAME="AP1" TYPE="DOUBLE" />
+             <VAR NAME="AP2" TYPE="DOUBLE" />
+             <VAR NAME="AP3" TYPE="DOUBLE" />
+             <VAR NAME="AP4" TYPE="DOUBLE" />
+             <VAR NAME="AP5" TYPE="DOUBLE" />
+             <VAR NAME="AP6" TYPE="DOUBLE" />
+
+             <VAR NAME="TA1" TYPE="DOUBLE" />
+             <VAR NAME="TA2" TYPE="DOUBLE" />
+             <VAR NAME="TA3" TYPE="DOUBLE" />
+             <VAR NAME="TA4" TYPE="DOUBLE" />
+             <VAR NAME="TA5" TYPE="DOUBLE" />
+             <VAR NAME="TA6" TYPE="DOUBLE" />
+
+             <VAR NAME="F0" TYPE="DOUBLE" />
+
+             <VAR NAME="KX" TYPE="DOUBLE" INIT="1"/>
+             <VAR NAME="KY" TYPE="DOUBLE" INIT="2"/>
+             <VAR NAME="KZ" TYPE="DOUBLE" INIT="3"/>
+             <VAR NAME="KA" TYPE="DOUBLE" INIT="4"/>
+             <VAR NAME="KB" TYPE="DOUBLE" INIT="5"/>
+             <VAR NAME="KC" TYPE="DOUBLE" INIT="6"/>
+
+             <VAR NAME="STOP" TYPE="DOUBLE" />
+             <VAR NAME="FR" TYPE="DOUBLE" />
+         </VARIABLES>
+         <FUNBLOCK>
+             
+         </FUNBLOCK>
+    </DECLARE>
+
+
+    <COMMUNICATION>
+        <CONFIG>
+            <COM_TYPE>TCP</COM_TYPE>
+            <IP>192.168.2.20</IP>   
+            <PORT>40001</PORT>                         
+            <ROOTNAME>GrabPose</ROOTNAME>            
+        </CONFIG>
+
+        <SEND>
+            <ELEMENTS>
+                <ELEMENT TAG="CommandId" TYPE="DOUBLE" VAR="A" />
+            </ELEMENTS>
+        </SEND>
+
+        <RECEIVE>
+            <ELEMENTS>
+                <ELEMENT TAG="Pos_X" TYPE="DOUBLE" VAR="KX" />
+                <ELEMENT TAG="Pos_Y" TYPE="DOUBLE" VAR="KY" />
+                <ELEMENT TAG="Pos_Z" TYPE="DOUBLE" VAR="KZ" />
+                <ELEMENT TAG="Deg_A" TYPE="DOUBLE" VAR="KA" />
+                <ELEMENT TAG="Deg_B" TYPE="DOUBLE" VAR="KB" />
+                <ELEMENT TAG="Deg_C" TYPE="DOUBLE" VAR="KC"/>
+            </ELEMENTS>
+        </RECEIVE>
+    </COMMUNICATION>
+
+</ROOT>

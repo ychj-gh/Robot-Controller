@@ -1,0 +1,133 @@
+<ROOT>
+    <DECLARE>
+        <VARIABLES>
+             <VAR NAME="A" TYPE="DOUBLE" INIT="1" />
+             <VAR NAME="B" TYPE="DOUBLE" INIT="2" />
+             <VAR NAME="C" TYPE="DOUBLE" INIT="-3.3" />
+
+             <VAR NAME="CPX" TYPE="DOUBLE" INIT="1.0" />
+             <VAR NAME="CPY" TYPE="DOUBLE" INIT="2.0"/>
+             <VAR NAME="CPZ" TYPE="DOUBLE" INIT="100"/>
+             <VAR NAME="CPA" TYPE="DOUBLE" />
+             <VAR NAME="CPB" TYPE="DOUBLE" />
+             <VAR NAME="CPC" TYPE="DOUBLE" />
+
+             <VAR NAME="AP1" TYPE="DOUBLE" />
+             <VAR NAME="AP2" TYPE="DOUBLE" />
+             <VAR NAME="AP3" TYPE="DOUBLE" />
+             <VAR NAME="AP4" TYPE="DOUBLE" />
+             <VAR NAME="AP5" TYPE="DOUBLE" />
+             <VAR NAME="AP6" TYPE="DOUBLE" />
+
+             <VAR NAME="TA1" TYPE="DOUBLE" />
+             <VAR NAME="TA2" TYPE="DOUBLE" />
+             <VAR NAME="TA3" TYPE="DOUBLE" />
+             <VAR NAME="TA4" TYPE="DOUBLE" />
+             <VAR NAME="TA5" TYPE="DOUBLE" />
+             <VAR NAME="TA6" TYPE="DOUBLE" />
+
+             <VAR NAME="F0" TYPE="DOUBLE" />
+
+             <VAR NAME="KX" TYPE="DOUBLE" />
+             <VAR NAME="KY" TYPE="DOUBLE" />
+             <VAR NAME="KZ" TYPE="DOUBLE" />
+             <VAR NAME="KA" TYPE="DOUBLE" />
+             <VAR NAME="KB" TYPE="DOUBLE" />
+             <VAR NAME="KC" TYPE="DOUBLE" />
+
+             <VAR NAME="STOP" TYPE="DOUBLE" />
+             <VAR NAME="FR" TYPE="DOUBLE" />
+         </VARIABLES>
+         <FUNBLOCK>
+             <FB NAME="PID0" TYPE="PID" Kp="4.0" Ki="10" Kd="0.1" />
+             <FB NAME="DELAY0" TYPE="DELAY" T="10" />
+             <FB NAME="POSCORR0" TYPE="POSCORR" 
+                    CorrType="0" 
+                    LowerLimX="-10" 
+                    LowerLimY="-10" 
+                    LowerLimZ="-10" 
+                    UpperLimX="10"
+                    UpperLimY="10"
+                    UpperLimZ="10"
+                    MaxRotAngle="5000"
+                    RefCorrSys="0" 
+
+                    OverTransLim="99999"
+                    OverRotAngle="99999"
+                    />
+             <FB NAME="AXISCORR0" TYPE="AXISCORR" 
+                    CorrType="0" 
+                    LowerLimA1="-5"
+                    LowerLimA2="-5"
+                    LowerLimA3="-5"
+                    LowerLimA4="-5"
+                    LowerLimA5="-5"
+                    LowerLimA6="-5"
+
+                    UpperLimA1="5"
+                    UpperLimA2="5"
+                    UpperLimA3="5"
+                    UpperLimA4="5"
+                    UpperLimA5="5"
+                    UpperLimA6="5" 
+
+                    OverLimA1="20"
+                    OverLimA2="20"
+                    OverLimA3="20"
+                    OverLimA4="20"
+                    OverLimA5="20"
+                    OverLimA6="20" />
+         </FUNBLOCK>
+    </DECLARE>
+
+
+    <COMMUNICATION>
+        <CONFIG>
+            <COM_TYPE>UDP</COM_TYPE>
+            <IP>127.0.0.1</IP>   
+            <PORT>49152</PORT>                         
+            <ROOTNAME>Root</ROOTNAME>            
+        </CONFIG>
+
+        <SEND>
+            <ELEMENTS>
+                <ELEMENT TAG="CPOS.X" TYPE="DOUBLE" VAR="CPX" />
+                <ELEMENT TAG="CPOS.Y" TYPE="DOUBLE" VAR="CPY" />
+                <ELEMENT TAG="CPOS.Z" TYPE="DOUBLE" VAR="CPZ" />
+                <ELEMENT TAG="CPOS.A" TYPE="DOUBLE" VAR="CPA" />
+                <ELEMENT TAG="CPOS.B" TYPE="DOUBLE" VAR="CPB" />
+                <ELEMENT TAG="CPOS.C" TYPE="DOUBLE" VAR="CPC" />
+
+                <ELEMENT TAG="APOS.A1" TYPE="DOUBLE" VAR="AP1" />
+                <ELEMENT TAG="APOS.A2" TYPE="DOUBLE" VAR="AP2" />
+                <ELEMENT TAG="APOS.A3" TYPE="DOUBLE" VAR="AP3" />
+                <ELEMENT TAG="APOS.A4" TYPE="DOUBLE" VAR="AP4" />
+                <ELEMENT TAG="APOS.A5" TYPE="DOUBLE" VAR="AP5" />
+                <ELEMENT TAG="APOS.A6" TYPE="DOUBLE" VAR="AP6" />
+
+                <ELEMENT TAG="GearTorque.A1" TYPE="DOUBLE" VAR="TA1" />
+                <ELEMENT TAG="GearTorque.A2" TYPE="DOUBLE" VAR="TA2" />
+                <ELEMENT TAG="GearTorque.A3" TYPE="DOUBLE" VAR="TA3" />
+                <ELEMENT TAG="GearTorque.A4" TYPE="DOUBLE" VAR="TA4" />
+                <ELEMENT TAG="GearTorque.A5" TYPE="DOUBLE" VAR="TA5" />
+                <ELEMENT TAG="GearTorque.A6" TYPE="DOUBLE" VAR="TA6" />
+
+                <ELEMENT TAG="FLAG" TYPE="DOUBLE" VAR="F0" />
+            </ELEMENTS>
+        </SEND>
+
+        <RECEIVE>
+            <ELEMENTS>
+                <ELEMENT TAG="RKorr.X" TYPE="DOUBLE" VAR="KX" />
+                <ELEMENT TAG="RKorr.Y" TYPE="DOUBLE" VAR="KY" />
+                <ELEMENT TAG="RKorr.Z" TYPE="DOUBLE" VAR="KZ" />
+                <ELEMENT TAG="RKorr.A" TYPE="DOUBLE" VAR="KA" />
+                <ELEMENT TAG="RKorr.B" TYPE="DOUBLE" VAR="KB" />
+                <ELEMENT TAG="RKorr.C" TYPE="DOUBLE" VAR="KC"/>
+                <ELEMENT TAG="FREE" TYPE="LONG" VAR="FR" />
+                <ELEMENT TAG="STOP.stopFlag" TYPE="BOOL" VAR="STOP" /> 
+            </ELEMENTS>
+        </RECEIVE>
+    </COMMUNICATION>
+
+</ROOT>

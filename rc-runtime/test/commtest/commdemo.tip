@@ -1,0 +1,18 @@
+MOVJ HOME, V50, Z0 ; # GO Back Home
+# Get Current Position
+RC_POSACT(BP001);
+RC_PRINT(BP001);
+# Communication with sensor
+RC_COMMUNICATION(1000);
+# Print the data from extern
+RC_PRINT(KX, KY, KZ, KA, KB, KC, FR, STOP);
+# Add offset on X-axes
+ADD BP003(2), KX;
+RC_PRINT(BP003);
+I001 = 2;
+RC_REF_SYS(I001);
+MOVL BP003, V50, Z0;
+# Print current position after LIN order
+RC_POSACT(BP002);
+RC_PRINT(BP002);
+HALT;

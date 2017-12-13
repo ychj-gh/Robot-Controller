@@ -1,0 +1,5 @@
+MOVJ HOME, V50, Z0 ; # GO Back Home
+RC_SUM(1, 2);
+RC_SUM(3,4);
+RC_START_RSI("rsidemo");
+HALT;
