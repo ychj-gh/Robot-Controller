@@ -97,13 +97,14 @@ void rsi_routine(void *cookie) {
 		try {
 			RTIME start = rt_timer_read();
 			rsiExec.execute();
+			// INRSIPeriod = !INRSIPeriod;
 #ifndef RSI_DEBUG
 			if(!RSIStopFlag) {
 				rsi_step();
 			}
 #endif
 			RTIME end = rt_timer_read();
-			std::cout << "RSI cost " << end - start << " ns" << std::endl;
+			std::cout << "RSI cost " << end << "---" << start << "---" << end - start << " ns" << std::endl;
 		} catch(rc_exception &e) {
 			e.what();
 			RSIStopFlag = true;
@@ -177,11 +178,11 @@ static void executor_routine(void *cookie){
 			rc_core.exec_run_mode = 1;
 
 			// 测试RSI
-			// std::string project("../rc-runtime/test/rsidemo");
-			// std::string program("../rc-runtime/test/rsidemo/rsisample");
+			// std::string project("./rc-runtime/test/rsidemo");
+			// std::string program("./rc-runtime/test/rsidemo/rsisample");
 			
-			// std::string project("../rc-runtime/test/Home");
-			// std::string program("../rc-runtime/test/Home/sample");
+			// std::string project("./rc-runtime/test/Home");
+			// std::string program("./rc-runtime/test/Home/sample");
 			// RCInterpreter executor(project,program);
 			RCInterpreter executor(rc_core.cur_project, rc_core.cur_program);
 
@@ -304,58 +305,61 @@ int main(int argc, char **argv) {
 	printf("Move Mode : ");
 	rc_core.stepflag == 1 ? printf("Step mode\n") : printf("Continuous mode\n");
 	// 模拟示教盒操作
-	// printf("Please enter Teach Box Command\n");
-	// printf("p: import project\n");
-	// printf("f: import program file\n");
-	// printf("r: reset the program pointer\n");
-	// printf("s: start button press down\n");
-	// printf("w: start button up\n");
-	// printf("c: change run mode\n");
-	// printf("t: turn on or off the power\n");
-	// int stepflag = 0;
-	// while(1){
-	// 	char cmd;
-	// 	scanf("%c",&cmd);
-	// 	switch(cmd){
-	// 		case 'p':
-	// 			printf("project home imported\n");
-	// 			replyFileAndNames("Home");
-	// 			break;
-	// 		case 'f':
-	// 			printf("program file imported\n");
-	// 			importFileChanged("sample");
-	// 			break;
-	// 		case 'r':
-	// 			printf("the pointer reseted\n");
-	// 			resetPointer(2,7);
-	// 			break;
-	// 		case 's':
-	// 			printf("start down!\n");
-	// 			startKeyDown();
-	// 			break;
-	// 		case 'w':
-	// 			printf("start up!\n");
-	// 			startKeyUp();
-	// 			break;
-	// 		case 'c':
-	// 			printf("run mode changed to ");
-	// 			stepflag = (int)(!stepflag);
-	// 			statusChange(1,stepflag);
-	// 			if(rc_core.stepflag) printf("step\n");
-	// 			else 		 printf("continuous\n");
-	// 			break;
-	// 		case 't':
-	// 			printf("The servo Powered ");
-	// 			if(rc_shm->rc_mode == OP_TEACH)
-	// 				rc_shm->rc_mode = OP_RUN;
-	// 			else 
-	// 				rc_shm->rc_mode = OP_TEACH;
-	// 			printf("%s",(rc_shm->rc_mode ? "ON\n":"OFF\n"));
-	// 			break;
-	// 		default:
-	// 			break;
-	// 	}
-	// }
+	/*
+	printf("Please enter Teach Box Command\n");
+	printf("p: import project\n");
+	printf("f: import program file\n");
+	printf("r: reset the program pointer\n");
+	printf("s: start button press down\n");
+	printf("w: start button up\n");
+	printf("c: change run mode\n");
+	printf("t: turn on or off the power\n");
+	int stepflag = 0;
+	while(1){
+		char cmd;
+		scanf("%c",&cmd);
+		switch(cmd){
+			case 'p':
+				printf("project home imported\n");
+				replyFileAndNames("Home");
+				break;
+			case 'f':
+				printf("program file imported\n");
+				importFileChanged("sample");
+				break;
+			case 'r':
+				printf("the pointer reseted\n");
+				resetPointer(2,7);
+				break;
+			case 's':
+				printf("start down!\n");
+				startKeyDown();
+				break;
+			case 'w':
+				printf("start up!\n");
+				startKeyUp();
+				break;
+			case 'c':
+				printf("run mode changed to ");
+				stepflag = (int)(!stepflag);
+				statusChange(1,stepflag);
+				if(rc_core.stepflag) printf("step\n");
+				else 		 printf("continuous\n");
+				break;
+			case 't':
+				printf("The servo Powered ");
+				if(SHM_RC_MODE_GET(rc_shm) == OP_TEACH)
+					SHM_RC_MODE_SET(rc_shm);
+					// rc_shm->rc_mode = OP_RUN;
+				else 
+					SHM_RC_MODE_CLR(rc_shm);
+					// rc_shm->rc_mode = OP_TEACH;
+				printf("%s",(SHM_RC_MODE_GET(rc_shm) ? "ON\n":"OFF\n"));
+				break;
+			default:
+				break;
+		}
+	}*/
 
 	pause();
 

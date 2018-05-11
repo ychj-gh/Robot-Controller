@@ -9,10 +9,10 @@ int RSIXmlLoader::parseXml(std::vector<IValue> &addrspace,
 
 	TiXmlElement* decEle;
 	if(getNodeByName(rootEle, "DECLARE", decEle)) {
-
+		std::cout << "In DECLARE " << std::endl;
 		TiXmlElement* varEle ;
 		if(getNodeByName(decEle, "VARIABLES", varEle)) {
-			// std::cout << varEle->Value() << std::endl;
+			std::cout << varEle->Value() << std::endl;
 
 			TiXmlElement* vEle = varEle->FirstChildElement();
 			for(; vEle != NULL; vEle = vEle->NextSiblingElement()) {
@@ -50,17 +50,40 @@ int RSIXmlLoader::parseXml(std::vector<IValue> &addrspace,
 			for(; fbEle != NULL; fbEle = fbEle->NextSiblingElement()) {
 
 				/* get fb entity name */
-				TiXmlAttribute* attr = fbEle->FirstAttribute(); // NAME property in xml file for fb
-				std::string fbName = attr->Value();
+				// TiXmlAttribute* attr = fbEle->FirstAttribute(); // NAME property in xml file for fb
+				// std::string fbName = attr->Value();
+				// std::cout << "fbName = " << fbName << std::endl;
 
-				/* get fb entity pointer */
-				attr = attr->Next();     		// TYPE property in xml file for fb
-				EntityBase* entity = EntityFactory::getEntity(attr->Value());
+				// /* get fb entity pointer */
+				// attr = attr->Next();     		// TYPE property in xml file for fb
+				// EntityBase* entity = EntityFactory::getEntity(attr->Value());
 
-				/* config fb entity */
-				for(attr = attr->Next(); attr != NULL; attr = attr->Next()) {
-					entity->setConfig(attr->Name(), attr->Value());
+				// /* config fb entity */
+				// for(attr = attr->Next(); attr != NULL; attr = attr->Next()) {
+				// 	entity->setConfig(attr->Name(), attr->Value());
+				// }
+
+				std::string fbName;
+				std::string fbType;
+				for(TiXmlAttribute* attr = fbEle->FirstAttribute(); attr != NULL; attr = attr->Next())
+				{
+					std::cout << attr->Value() << std::endl;
+					if(strcmp(attr->Name(),"TYPE") == 0) 
+					{
+						fbType = attr->Value();
+						break;
+					} 
 				}
+				EntityBase* entity = EntityFactory::getEntity(fbType);
+				for(TiXmlAttribute* attr = fbEle->FirstAttribute(); attr != NULL; attr = attr->Next())
+				{
+					std::string attrName = attr->Name();
+					if(attrName == "NAME") fbName = attr->Value();
+					else if(attrName == "TYPE") continue;
+					else
+						entity->setConfig(attr->Name(),attr->Value());
+				}
+				std::cout << "fbName = " << fbName << std::endl;
 
 				fbMap.insert(std::pair<std::string, EntityBase*>(fbName, entity));
 			}
@@ -72,6 +95,7 @@ int RSIXmlLoader::parseXml(std::vector<IValue> &addrspace,
 
 	TiXmlElement* commEle;
 	if(getNodeByName(rootEle, "COMMUNICATION", commEle)) {
+		std::cout << "In COMMUNICATION configuration" << std::endl;
 		EntityComm* entity = dynamic_cast<EntityComm*>(EntityFactory::getEntity("COMMUNICATION"));
 
 		TiXmlElement* configEle ;

@@ -233,6 +233,7 @@ inline void inst_buffer_read_nonblock(ROBOT_INST &temp_inst, bool &flag) {
         robot_inst_buffer_flag = false;
         flag = true;
         send_cmd_to_rsi(1);
+        std::cout << "send msg = 1 to RSI" << std::endl;
     }
     rt_mutex_release(&inst_mutex_desc);       /* 释放同步互斥量 */
     // rc_shm->interp_startup_flag = 1;

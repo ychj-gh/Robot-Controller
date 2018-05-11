@@ -211,6 +211,7 @@ inline void sfun_servo_poweron(IValue *reg_base){
     outfile << "[sfun_servo_poweron]" << std::endl;
     sv_shm->ctrl_area.ControlWord = SERVO_RUN;
     reg_base->v.value_i = sv_shm->ctrl_area.PowerOnFlag;
+    // reg_base->v.value_i = 1;
     // printf("伺服启动完成？　%d\n",sv_shm->ctrl_area.PowerOnFlag);
 }
 

@@ -18,6 +18,7 @@
 
 #include "RSIXml.h"
 #include "RSIRuntimeModel.h"
+#include <native/timer.h>
 
 using namespace antlr4;
 using namespace antlr4::tree;
@@ -65,11 +66,15 @@ public:
 	}
 
 	int execute() {
-		std::cout << std::endl << "| ==== RSI executor start ===>" << std::endl << std::endl;
+		std::cout << std::endl << "| ==== RSI executor start ===>" << std::endl;
+		RTIME start = rt_timer_read();
 		for(int i = 0; i < code.size(); i ++) {
 			code[i]->execute(NULL);
+
 		}
-		std::cout << std::endl << " <=== RSI executor stop ==== |" << std::endl << std::endl;
+					RTIME tmp = rt_timer_read();
+			std::cout << "cost time = " << tmp << " ----- " << start <<"-----"<< tmp - start << std::endl;
+		std::cout << std::endl << " <=== RSI executor stop ==== |" << std::endl;
 		return 0;
 	}
 

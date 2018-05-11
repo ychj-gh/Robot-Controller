@@ -188,9 +188,9 @@ int resetPointer(int curPointer,int totalline) {
 	rc_core.cur_linenum = 1;
 	rc_core.prog_ready = 1;
 
-	if(rc_core.exec_run_mode) {
+	// if(rc_core.exec_run_mode) {
 		send_cmd_to_exec(CMD_RESET);
-	}	
+	// }	
 	// if(rc_core.interp_status) {
 	// 	send_cmd_to_interp(2);  // 2 --> reset cmd
 	// }

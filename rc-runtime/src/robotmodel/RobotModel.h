@@ -144,7 +144,7 @@ namespace RobotSpace{
 		int getActualTCPPos(RCMem* shm, RT_MUTEX* mutex,Position_MCS_rad& pos)
 		{
 			if(pos.size() != 6) return -1;
-			Position_ACS_deg deg;
+			Position_ACS_deg deg(getRobotAxisNum());
 			getActualAxisPos(shm,mutex,deg);
 			calcForwardKin_RPY(deg2rad(deg),pos);
 			return 0;
@@ -156,9 +156,10 @@ namespace RobotSpace{
 		{
 			if(posT.size() != 6) return -1;
 			getActualAxisPos(shm,mutex,posA);
-			Position_MCS_rad pos(6);
-			calcForwardKin_RPY(deg2rad(posA),pos);
-			posT = rad2deg(pos);
+			// Position_MCS_rad pos(6);
+			calcForwardKin_RPY(deg2rad(posA),posT);
+			for(size_t i = 3; i < 6; ++i)
+				posT[i] = rad2deg(posT[i]);
 			return 0;
 		}
 		/**

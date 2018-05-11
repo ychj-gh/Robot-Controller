@@ -159,7 +159,7 @@ inline int rsi_comm_interface(std::vector<int>& params, EntityBase* config,
 	if(entity->stype == SENSOR && entity->cycflag == false){
 		if(entity->cfgruncnt < entity->cfgcmdcnt){
 			int len = entity->genSendPackage(addrspace);
-    		std::cout << (unsigned)entity->sendBuffer << std::endl;
+    		std::cout << (unsigned)entity->sendBuffer;
     		int sn = sendto(sockfd, entity->sendBuffer, len, 0, (struct sockaddr *)&entity->sensoraddr, sizeof(entity->sensoraddr));
    	 		std::cout << "send ==> " << sn << " bytes and have sent " << entity->cfgruncnt+1 << " packages"<< std::endl;
    	 	}
@@ -184,6 +184,7 @@ inline int rsi_comm_interface(std::vector<int>& params, EntityBase* config,
     		throw rc_rsicomm_outoftime_exception("rsi_comm_interface");
     	} else {
     		std::cout << "recv <== " << rn << " bytes" << std::endl;
+    		std::cout << entity->recvBuffer;
     		entity->parseRecvPackage(addrspace);
     	}
     	addrspace[0] = 1;
@@ -191,7 +192,7 @@ inline int rsi_comm_interface(std::vector<int>& params, EntityBase* config,
 	return 0;
 }
 
-
+extern bool posFirstFlag;
 inline int rsi_poscorr(std::vector<int>& params, EntityBase* config, std::vector<IValue>& addrspace) {
 	EntityPOSCORR *entity = dynamic_cast<EntityPOSCORR*>(config);
 	if(entity != NULL) {
@@ -214,42 +215,27 @@ inline int rsi_poscorr(std::vector<int>& params, EntityBase* config, std::vector
 		throw rc_fb_lackofconfig_exception("POSCORR");
 	}
 
+	// size_t n = pRobot->getRobotAxisNum();
+	// /* define a temp robot inst */
+	// ROBOT_INST temp_inst;			
+	// /* step 1: setting the robot inst type */
+	// temp_inst.ri_type = CART_ADJUST;
+	// /* step 2: specify the first point(the current position) of CART_ADJUST inst  */	
+	// Position_ACS_deg p1(n);
+	// pRobot->getActualAxisPos(rc_shm,&rc_mutex_desc,p1);
+	// temp_inst.args[0].apv = p1;
+	// /* step 3: specify the second point(the target position) of CART_ADJUST inst  */	
+	// Position_MCS_rad p2;				// 待考虑
+	// for(int i = 0; i < 6; i ++)
+	// 	p2[i] = addrspace[params[i]].RSIDouble();
+	// temp_inst.args[1].cpv = p2;
+	// /* step 4: setting frame */
+	// temp_inst.args[0].jjp.refsys = 2;
+	// /* step 5: insert inst into inst-buffer */
+	// inst_buffer_write(temp_inst);	
+	
 	size_t n = pRobot->getRobotAxisNum();
-	/* define a temp robot inst */
-	ROBOT_INST temp_inst;			
-	/* step 1: setting the robot inst type */
-	temp_inst.ri_type = CART_ADJUST;
-	/* step 2: specify the first point(the current position) of CART_ADJUST inst  */	
-	Position_ACS_deg p1(n);
-	pRobot->getActualAxisPos(rc_shm,&rc_mutex_desc,p1);
-	temp_inst.args[0].apv = p1;
-	/* step 3: specify the second point(the target position) of CART_ADJUST inst  */	
-	Position_MCS_rad p2;				// 待考虑
-	for(int i = 0; i < 6; i ++)
-		p2[i] = addrspace[params[i]].RSIDouble();
-	temp_inst.args[1].cpv = p2;
-	/* step 4: setting frame */
-	temp_inst.args[0].jjp.refsys = 2;
-	/* step 5: insert inst into inst-buffer */
-	inst_buffer_write(temp_inst);	
-	return 0;
-}
-
-extern bool posFirstFlag;
-inline int rsi_axiscorr(std::vector<int>& params, EntityBase* config, std::vector<IValue>& addrspace) {
-	EntityAXISCORR *entity = dynamic_cast<EntityAXISCORR*>(config);
-	if(entity != NULL) {
-#ifdef RSI_DEBUG
-		entity->printInfo();
-#endif
-	} else {
-		std::cout << "this fb does not have config entity" << std::endl;
-		rc_fb_lackofconfig_exception("AXISCORR");
-	}	
-	size_t n = pRobot->getRobotAxisNum();
-	/* define a temp robot inst */
-	ROBOT_INST temp_inst;			
-	/* step 1: setting the robot inst type */
+	ROBOT_INST temp_inst;
 	temp_inst.ri_type = AXIS_ADJUST;
 	/* step 2: specify the first point(the current position) of CART_ADJUST inst  */	
 	Position_ACS_deg p1(n);
@@ -287,6 +273,69 @@ inline int rsi_axiscorr(std::vector<int>& params, EntityBase* config, std::vecto
 	// std::cout << "Correct Pos = " << p2.transpose() << std::endl;
 	// std::cout << "In RSI Original Pos = " << p1.transpose() << std::endl;
 	// std::cout << "In RSI Target Pos = " << Pend.transpose() << std::endl;
+	temp_inst.args[0].jjp.refsys = 0;
+	inst_buffer_write(temp_inst);
+	return 0;
+}
+
+
+inline int rsi_axiscorr(std::vector<int>& params, EntityBase* config, std::vector<IValue>& addrspace) {
+	EntityAXISCORR *entity = dynamic_cast<EntityAXISCORR*>(config);
+	if(entity != NULL) {
+#ifdef RSI_DEBUG
+		entity->printInfo();
+#endif
+	} else {
+		std::cout << "this fb does not have config entity" << std::endl;
+		rc_fb_lackofconfig_exception("AXISCORR");
+	}	
+	size_t n = pRobot->getRobotAxisNum();
+	/* define a temp robot inst */
+	ROBOT_INST temp_inst;			
+	/* step 1: setting the robot inst type */
+	temp_inst.ri_type = AXIS_ADJUST;
+	/* step 2: specify the first point(the current position) of CART_ADJUST inst  */	
+	Position_ACS_deg p1(n);
+	if(posFirstFlag){
+		pRobot->getActualAxisPos(rc_shm,&rc_mutex_desc,p1);
+		posFirstFlag = false;
+	}else
+		pRobot->getCommandAxisPos(rc_shm,&rc_mutex_desc,p1);
+	temp_inst.args[0].apv = p1;
+	// std::cout << " input apv " << p1.transpose() << std::endl;
+	// /* step 3: specify the second point(the target position) of CART_ADJUST inst  */	
+	// AxisPos_Deg p2(6);
+
+	// for(int i = 0; i < 6; i ++) {
+	// 	p2[i] = p1[i] + addrspace[params[i]].RSIDouble();
+	// }
+	// temp_inst.args[1].apv = p2;
+	// /* step 4: setting frame */
+	// temp_inst.args[0].jjp.refsys = 0;
+	// /* step 5: insert inst into inst-buffer */
+	// inst_buffer_write(temp_inst);	
+
+	//============================= ORIGINAL =================================/
+	// just for test
+	// Position_MCS_deg p2(6);  // 这里需要考虑一下，力传感器传回的　N 和 N*m 怎么转换到工具坐标系的位姿
+	// for(int i = 0; i < 6; ++i)
+	// 	p2[i] = addrspace[params[i]].RSIDouble();
+	// Position_MCS_rad p2tmp = posMCS_deg2rad(p2);
+	// // Position_MCS_rad posTCP(6);
+	// // pRobot->toolRPY2baseRPY(deg2rad(p1),p2tmp,posTCP);
+	// // Position_ACS_rad Pend(n);
+	// // pRobot->calcInverseKin_RPY(posTCP,deg2rad(p1),Pend);
+	// Position_ACS_rad Pend(n);
+	// pRobot->toolRPY2axisPos(deg2rad(p1),p2tmp,Pend);
+	// temp_inst.args[1].apv = rad2deg(Pend);
+	// // std::cout << "Correct Pos = " << p2.transpose() << std::endl;
+	// // std::cout << "In RSI Original Pos = " << p1.transpose() << std::endl;
+	// // std::cout << "In RSI Target Pos = " << Pend.transpose() << std::endl;
+	// temp_inst.args[0].jjp.refsys = 0;
+	// inst_buffer_write(temp_inst);
+	//============================= ORIGIANL ======================================//
+	for(int i = 0; i < 6; ++i)
+		temp_inst.args[1].apv[i] = addrspace[params[i]].RSIDouble();
 	temp_inst.args[0].jjp.refsys = 0;
 	inst_buffer_write(temp_inst);
 	return 0;

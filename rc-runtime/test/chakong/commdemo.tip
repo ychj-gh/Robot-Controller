@@ -1,0 +1,30 @@
+RC_TOOL(TOOL);
+# RC_REF_SYS(I001);
+MOVJ P001, V50, Z0 ; # GO Back Home
+#################### Step 1
+MOVL P002,V1,Z0;
+################
+# Step 2: Communication with sensor
+# RC_COMMUNICATION(5000);
+# Print the data from extern
+# RC_PRINT(KX, KY, KZ, KA, KB, KC);
+# Add offset on Z-axes
+# ADD KZ, 200.0;
+# SETE BP001(1), KX;
+# SETE BP001(2), KY;
+# SETE BP001(3), KZ;
+# SETE BP001(4), KC;
+# SETE BP001(5), KB;
+# SETE BP001(6), KA;
+
+#######################
+# RC_PRINT(BP003);
+ADD BP003(3), 200.0;
+MOVL BP003,V1,Z0;
+# Step 3: force control
+RC_START_RSI("rsidemo");
+# Step 8: raise
+MOVL P004,V1,Z0;
+# Step 9: Go back home
+MOVL P001, V50, Z0;
+HALT;

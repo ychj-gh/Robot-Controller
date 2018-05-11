@@ -1,0 +1,47 @@
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: 
+
+The output was:
+1
+cc1plus: internal compiler error: Segmentation fault
+Please submit a full bug report,
+with preprocessed source if appropriate.
+See <file:///usr/share/doc/gcc-5/README.Bugs> for instructions.
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /usr/bin/c++ 
+Build flags: 
+Id flags: -c
+
+The output was:
+1
+cc1plus: internal compiler error: Segmentation fault
+Please submit a full bug report,
+with preprocessed source if appropriate.
+See <file:///usr/share/doc/gcc-5/README.Bugs> for instructions.
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+c++: fatal error: no input files
+compilation terminated.
+Determining if the CXX compiler works failed with the following output:
+Change Dir: /root/workspace/ychj/RobotController/rc-runtime/build/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec1219628701/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1219628701.dir/build.make CMakeFiles/cmTryCompileExec1219628701.dir/build
+make[1]: Entering directory `/root/workspace/ychj/RobotController/rc-runtime/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /root/workspace/ychj/RobotController/rc-runtime/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1219628701.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTryCompileExec1219628701.dir/testCXXCompiler.cxx.o -c /root/workspace/ychj/RobotController/rc-runtime/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+cc1plus: internal compiler error: Segmentation fault
+Please submit a full bug report,
+with preprocessed source if appropriate.
+See <file:///usr/share/doc/gcc-5/README.Bugs> for instructions.
+make[1]: *** [CMakeFiles/cmTryCompileExec1219628701.dir/testCXXCompiler.cxx.o] Error 1
+make[1]: Leaving directory `/root/workspace/ychj/RobotController/rc-runtime/build/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec1219628701/fast] Error 2
+
+

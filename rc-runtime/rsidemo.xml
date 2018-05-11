@@ -1,67 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ROOT>
     <DECLARE>
         <VARIABLES>
-             <!-- PC或传感器信息--输入变量（均由用户根据实际需要自行定义） -->
-             <!-- 力传感器信息 -->
-             <VAR NAME="CORX" TYPE="DOUBLE" />
-             <VAR NAME="CORY" TYPE="DOUBLE" />
-             <VAR NAME="CORZ" TYPE="DOUBLE" />
-             <VAR NAME="CORA" TYPE="DOUBLE" />
-             <VAR NAME="CORB" TYPE="DOUBLE" />
-             <VAR NAME="CORC" TYPE="DOUBLE" />
-
-             <!-- 内部变量 -->
-             <VAR NAME="OFFX" TYPE="DOUBLE" />  <!-- 通过PID模块中的prev获取 -->
-             <VAR NAME="OFFY" TYPE="DOUBLE" />
-             <VAR NAME="OFFZ" TYPE="DOUBLE" />
-             <VAR NAME="OFFA" TYPE="DOUBLE" />
-             <VAR NAME="OFFB" TYPE="DOUBLE" />
-             <VAR NAME="OFFC" TYPE="DOUBLE" />
-             <!-- <VAR NAME="FLAGOFF" TYPE="BOOL" INIT="0" /> -->
-         </VARIABLES>
-         <FUNBLOCK>
-             <FB NAME="PID1" TYPE="PIDN" Kp="0.5" Ki="0" Kd="0" N="3"/>
-             <FB NAME="PID2" TYPE="PIDN" Kp="0.5" Ki="0" Kd="0" N="3"/>
-             <FB NAME="SETOFFSET1" TYPE="SETOFFSET" OFFSETCNT="6" FILTERCFG="10"/>
-             <FB NAME="DELAY0" TYPE="DELAY" T="10" />
-             <FB NAME="POSCORR0" TYPE="POSCORR" CorrType="0" LowerLimX="-10" LowerLimY="-10" LowerLimZ="-10" UpperLimX="10" UpperLimY="10" UpperLimZ="10" MaxRotAngle="5000" RefCorrSys="2" OverTransLim="99999" OverRotAngle="99999"/>
-             <FB NAME="AXISCORR0" TYPE="AXISCORR" CorrType="0" LowerLimA1="-5" LowerLimA2="-5" LowerLimA3="-5" LowerLimA4="-5" LowerLimA5="-5" LowerLimA6="-5" UpperLimA1="5"
-                UpperLimA2="5" UpperLimA3="5" UpperLimA4="5" UpperLimA5="5" UpperLimA6="5"  OverLimA1="20" OverLimA2="20" OverLimA3="20" OverLimA4="20" OverLimA5="20" OverLimA6="20" />
-         </FUNBLOCK>
+            <VAR TYPE="DOUBLE" NAME="KX" INIT="0.0"/>
+            <VAR TYPE="DOUBLE" NAME="KY"/>
+            <VAR TYPE="DOUBLE" NAME="KZ"/>
+            <VAR TYPE="DOUBLE" NAME="KA"/>
+            <VAR TYPE="DOUBLE" NAME="KB"/>
+            <VAR TYPE="DOUBLE" NAME="KC"/>
+            <VAR TYPE="BOOL" NAME="STOP"/>
+            <VAR TYPE="DOUBLE" NAME="AP1" INIT="0.0"/>
+            <VAR TYPE="DOUBLE" NAME="AP2"/>
+            <VAR TYPE="DOUBLE" NAME="AP3"/>
+            <VAR TYPE="DOUBLE" NAME="AP4"/>
+            <VAR TYPE="DOUBLE" NAME="AP5"/>
+            <VAR TYPE="DOUBLE" NAME="AP6"/>
+        </VARIABLES>
+        <FUNBLOCK>
+            <FB UpperLimY="10" TYPE="POSCORR" RefCorrSys="2" OverRotAngle="50" LowerLimZ="-10" UpperLimZ="10" MaxRotAngle="50" CorrType="0" LowerLimY="-10" UpperLimX="10" OverTransLim="50" NAME="POSCORR0" LowerLimX="-10"/>
+        </FUNBLOCK>
     </DECLARE>
-
     <COMMUNICATION>
         <CONFIG>
             <COM_TYPE>UDP</COM_TYPE>
-            <IP>192.168.2.1</IP>   
-            <PORT>49152</PORT>
-            <TOLERAT>12</TOLERAT>                         <!-- 等待数据容忍时间（ms） -->   
+            <IP>192.168.2.2</IP>
+            <PORT>8888</PORT>
+            <TOLERAT>12</TOLERAT>
             <ROOTNAME>Root</ROOTNAME>
-            <SENSORTYPE>SENSOR</SENSORTYPE>  
-            <CFGCMDCNT>4</CFGCMDCNT>
-            <SENSORMODE>TRIG</SENSORMODE>
-            <RECVOFFSET>12</RECVOFFSET>                     
+            <SENSORTYPE>PC</SENSORTYPE>
+            <SENSORMODE>CYCLIC</SENSORMODE>
         </CONFIG>
-        <TYPECFG>
-            <CFGTYPE HEAD="UINT16" COMMAND="UINT16" DATA="UINT16"/>   
-            <SENDTYPE HEAD="UINT16" COMMAND="UINT16" DATA="UINT16"/>  
-        </TYPECFG>
-        <CFGPACKAGES>
-            <PACKAGE HEAD="0x1234"  COMMAND="0x0082"  DATA="40"/>  <!-- 应该与RSI通信周期相当 这里160ms -->
-            <PACKAGE HEAD="0x1234"  COMMAND="0x0081"  DATA="0x0100"/>
-            <PACKAGE HEAD="0x1234"  COMMAND="0x0042"  DATA="0x00FF"/>
-            <PACKAGE HEAD="0x1234"  COMMAND="0x0002"  DATA="0x0000"/>
-        </CFGPACKAGES> 
-<!-- 与普通传感器交互（二者取其一） -->
-        <RECEIVE>       <!-- 通过RECEIVE节点配置解析传感器传回数据，并存入控制器内部数据结构 -->
-            <PACKAGE>
-                <ELEMENT TYPE="INT32" RATIO="0.0001" VAR="CORX"/>
-                <ELEMENT TYPE="INT32" RATIO="0.0001" VAR="CORY"/>
-                <ELEMENT TYPE="INT32" RATIO="0.0001" VAR="CORZ"/>
-                <ELEMENT TYPE="INT32" RATIO="0.00001" VAR="CORA"/>
-                <ELEMENT TYPE="INT32" RATIO="0.00001" VAR="CORB"/>
-                <ELEMENT TYPE="INT32" RATIO="0.00001" VAR="CORC"/>
-            </PACKAGE>
+        <SEND>
+            <ELEMENTS>
+                <ELEMENT TYPE="DOUBLE" TAG="APOS.A1" VAR="AP1"/>
+                <ELEMENT TYPE="DOUBLE" TAG="APOS.A2" VAR="AP2"/>
+                <ELEMENT TYPE="DOUBLE" TAG="APOS.A3" VAR="AP3"/>
+                <ELEMENT TYPE="DOUBLE" TAG="APOS.A4" VAR="AP4"/>
+                <ELEMENT TYPE="DOUBLE" TAG="APOS.A5" VAR="AP5"/>
+                <ELEMENT TYPE="DOUBLE" TAG="APOS.A6" VAR="AP6"/>
+            </ELEMENTS>
+        </SEND>
+        <RECEIVE>
+            <ELEMENTS>
+                <ELEMENT TYPE="DOUBLE" TAG="RKorr.X" VAR="KX"/>
+                <ELEMENT TYPE="DOUBLE" TAG="RKorr.Y" VAR="KY"/>
+                <ELEMENT TYPE="DOUBLE" TAG="RKorr.Z" VAR="KZ"/>
+                <ELEMENT TYPE="DOUBLE" TAG="RKorr.A" VAR="KA"/>
+                <ELEMENT TYPE="DOUBLE" TAG="RKorr.B" VAR="KB"/>
+                <ELEMENT TYPE="DOUBLE" TAG="RKorr.C" VAR="KC"/>
+                <ELEMENT TYPE="BOOL" TAG="STOP.stopFlag" VAR="STOP"/>
+            </ELEMENTS>
         </RECEIVE>
     </COMMUNICATION>
 </ROOT>

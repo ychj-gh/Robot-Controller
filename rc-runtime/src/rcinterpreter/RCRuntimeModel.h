@@ -205,8 +205,10 @@ public:
 				Position_MCS_rad tarPos(6);
 				if(addrspace[endpointIndex].type == TTRPOSE) {
 					int posIndex = addrspace[endpointIndex].v.value_cp;
-					for(int i = 0; i < 6; i ++)
+					for(int i = 0; i < 3; i ++)
 						tarPos[i] = cpaddr[posIndex][i];
+					for(int i = 3; i < 6;  ++i)
+						tarPos[i] = deg2rad(cpaddr[posIndex][i]);
 				} else if(addrspace[endpointIndex].type == TJTPOSE) {
 					int posIndex = addrspace[endpointIndex].v.value_ap;
 					Position_ACS_deg p2(n);

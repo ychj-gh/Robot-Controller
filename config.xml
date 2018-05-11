@@ -28,27 +28,27 @@
 		<servo  pid="7" name="axis6" id="6" type="0" max_pos="360.0" min_pos="-360.0" ratio="345" encode="131072" />
 	</servos>
 	<robot name="estun" type="0" count="6">
-		<AXISINFO name="axis1" dir="-1" offset="0.0">
+		<AXISINFO name="axis1" dir="-1" offset="-0.925598">
 			<DH theta="0" d="505" a="150" alpha="-90" offset="0" />
 			<LIM max_pos="180.0" min_pos="-180.0" max_vel="155" max_acc="200" max_dec="200" max_jerk = "1000"/>
 		</AXISINFO>
-		<AXISINFO name="axis2" dir="1" offset="0.0">
+		<AXISINFO name="axis2" dir="1" offset="0.414734">
 			<DH theta="0" d="0" a="610" alpha="0" offset="-90" />
 			<LIM max_pos="160.0" min_pos="-70.0" max_vel="155" max_acc="200" max_dec="200" max_jerk = "1000"/>
 		</AXISINFO>
-		<AXISINFO name="axis3" dir="-1" offset="0.0">
+		<AXISINFO name="axis3" dir="-1" offset="-0.222473">
 			<DH theta="0" d="0" a="150" alpha="90" offset="0" />
 			<LIM max_pos="80.0" min_pos="-200.0" max_vel="230" max_acc="200" max_dec="200" max_jerk = "1000"/>
 		</AXISINFO>
-		<AXISINFO name="axis4" dir="-1" offset="0.0">
+		<AXISINFO name="axis4" dir="-1" offset="0.142822">
 			<DH theta="0" d="-675.5" a="0" alpha="-90" offset="0" />
 			<LIM max_pos="170.0" min_pos="-170.0" max_vel="360" max_acc="200" max_dec="200" max_jerk = "1000"/>
 		</AXISINFO>
-		<AXISINFO name="axis5" dir="-1" offset="0.0">
+		<AXISINFO name="axis5" dir="-1" offset="1.04919">
 			<DH theta="0" d="0" a="0" alpha="90" offset="0" />
 			<LIM max_pos="135.0" min_pos="-135.0" max_vel="200" max_acc="200" max_dec="200" max_jerk = "1000"/>
 		</AXISINFO>
-		<AXISINFO name="axis6" dir="1" offset="0.0">
+		<AXISINFO name="axis6" dir="1" offset="157.148">
 			<DH theta="0" d="-136" a="0" alpha="180" offset="0" />
 			<LIM max_pos="360.0" min_pos="-360.0" max_vel="300" max_acc="200" max_dec="200" max_jerk = "1000"/>
 		</AXISINFO>

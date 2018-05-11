@@ -151,7 +151,7 @@ inline int rsi_dec(std::vector<int>& params, EntityBase* config, std::vector<IVa
 
 inline int rsi_print(std::vector<int>& params, EntityBase* config, std::vector<IValue>& addrspace) {
 #ifdef RSI_DEBUG_PRINT
-	std::cout << std::endl << "[DEBUG: " << rdataIndexMap[params[0]] << " --> " << addrspace[params[0]] << " ]" << std::endl;
+	std::cout << "[DEBUG: " << rdataIndexMap[params[0]] << " --> " << addrspace[params[0]] << " ]" << std::endl;
 #else
 	std::cout << std::endl << "Macro RSI_DEBUG_PRINT not defined" << std::endl;
 #endif
